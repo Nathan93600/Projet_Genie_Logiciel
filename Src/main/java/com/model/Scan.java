@@ -36,4 +36,13 @@ public class Scan {
     public void setExecutionTime(Long executionTime) { this.executionTime = executionTime; }
     public Set<Fichier> getFichiers() { return fichiers; }
     public void setFichiers(Set<Fichier> fichiers) { this.fichiers = fichiers; }
+    public double getTempsExecutionTotal() {
+        if (fichiers == null || fichiers.isEmpty()) {
+            return 0;
+        }
+        double total = fichiers.stream()
+                               .mapToDouble(fichier -> fichier.getExecutionTime() != null ? fichier.getExecutionTime() : 0)
+                               .sum();
+        return total;
+    }
 }

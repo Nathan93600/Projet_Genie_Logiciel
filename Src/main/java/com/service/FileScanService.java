@@ -2,6 +2,10 @@ package com.service;
 
 import com.repository.FichierRepository;
 import com.repository.ScanRepository;
+
+import model.Fichier;
+import model.Scan;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashSet;
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.Set;
 
 @Service
@@ -60,5 +66,14 @@ public class FileScanService {
         fichiers.forEach(fichier -> fichier.setScan(scan)); // Associe chaque fichier au scan avant de sauvegarder
 
         return scanRepository.save(scan); // Sauvegarde le scan et automatiquement les fichiers grâce à la relation cascade
+    }
+
+    public double calculerMoyenneTempsExecutionParFichier() {
+        List<Fichier> fichiers = fichierRepository.findAll();
+        OptionalDouble moyenne = fichiers.stream()
+            .mapToDouble(Fichier::getTempsExecution)
+            .average();
+
+        return moyenne.isPresent() ? moyenne.getAsDouble() : 0;
     }
 }

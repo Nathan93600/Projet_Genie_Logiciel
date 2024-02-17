@@ -1,11 +1,15 @@
 package com.service;
 
 import com.repository.ScanRepository;
+
+import model.Scan;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 
 @Service
 public class ScanService {
@@ -68,5 +72,15 @@ public class ScanService {
     public Scan getScanById(Long scanId) {
         return scanRepository.findById(scanId)
                 .orElseThrow(() -> new RuntimeException("Scan not found with id " + scanId));
+    }
+
+    public double calculerMoyenneTempsExecutionParRepertoire() {
+        List<Scan> scans = scanRepository.findAll();
+        OptionalDouble moyenne = scans.stream()
+            .filter(scan -> scan.getFichiers() != null && !scan.getFichiers().isEmpty())
+            .mapToDouble(scan -> scan.getTempsExecutionTotal() / scan.getFichiers().size())
+            .average();
+
+        return moyenne.isPresent() ? moyenne.getAsDouble() : 0;
     }
 }
