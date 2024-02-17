@@ -1,15 +1,8 @@
 package com.service;
 
-import com.model.Scan;
-import com.repository.ScanRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 @ExtendWith(MockitoExtension.class)
 class ScanServiceTest {
