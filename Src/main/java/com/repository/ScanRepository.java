@@ -1,6 +1,6 @@
-package repository;
+package com.repository;
 
-import model.Scan;
+import com.model.Scan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScanRepository extends JpaRepository<Scan, Long> {
