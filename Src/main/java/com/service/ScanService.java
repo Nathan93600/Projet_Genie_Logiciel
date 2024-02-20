@@ -19,6 +19,10 @@ public class ScanService {
     @Autowired
     private ScanRepository scanRepository;
 
+    public ScanService(ScanRepository scanRepository) {
+        this.scanRepository = scanRepository;
+    }
+
     // Créer un nouveau scan
     public Scan createScan(Scan scan) {
         scan.setScanDate(LocalDateTime.now()); // Définir la date du scan à maintenant
