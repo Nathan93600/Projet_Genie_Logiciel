@@ -1,0 +1,14 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script: 
+    - mvn package
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying the application..."
+    # Ajoutez ici vos commandes de déploiement
