@@ -1,16 +1,12 @@
 import com.model.Scan;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.InjectMocks;
 import com.model.Fichier;
+import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-public class ScanUnitTest {
+public class ScanTest {
 
     @Test
     void testScanCreation() {

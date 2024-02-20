@@ -3,6 +3,7 @@ package com.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 public class Scan {
@@ -16,9 +17,10 @@ public class Scan {
     private LocalDateTime scanDate;
     private Long executionTime;
     private String scanPath;
+    
 
     @OneToMany(mappedBy = "scan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Fichier> fichiers;
+    private Set<Fichier> fichiers = new HashSet<>();
 
     // Getters and Setters
 
@@ -37,7 +39,7 @@ public class Scan {
     public Long getExecutionTime() { return executionTime; }
     public void setExecutionTime(Long executionTime) { this.executionTime = executionTime; }
     public Set<Fichier> getFichiers() { return fichiers; }
-    public void setFichiers(Set<Fichier> fichiers) { this.fichiers = fichiers; }
+    public void setFichiers(Set<Fichier> fichiers) {this.fichiers = fichiers;}
     public double getTempsExecutionTotal() {
         if (fichiers == null || fichiers.isEmpty()) {
             return 0;

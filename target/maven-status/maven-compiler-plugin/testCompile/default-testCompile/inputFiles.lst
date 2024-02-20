@@ -1,12 +1,2 @@
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\controller\ScanControllerIntegrationTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\repository\FichierRepositoryUnitTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\service\FileScanServiceIntegrationTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\controller\ScanControllerUnitTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\model\FichierUnitTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\model\ScanUnitTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\repository\ScanRepositoryTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\service\ScanServiceIntegrationTests.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\service\ScanServiceUnitTests.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\repository\FichierRepositoryIntegrationTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\repository\ScanRepositoryIntegrationTest.java
-C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\service\FileScanServiceUnitTest.java
+C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\model\FichierTest.java
+C:\Users\natha\OneDrive\Documents\ENSAI 3A\UE2 Développement d'application et DataOps\Génie Logiciel\Projet\Projet_Genie_Logiciel\src\test\java\com\model\ScanTest.java
