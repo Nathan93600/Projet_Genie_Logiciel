@@ -15,11 +15,13 @@ public class Scan {
     private String fileTypeFilter;
     private LocalDateTime scanDate;
     private Long executionTime;
+    private String scanPath;
 
     @OneToMany(mappedBy = "scan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Fichier> fichiers;
 
     // Getters and Setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Integer getMaxFiles() { return maxFiles; }
@@ -44,5 +46,12 @@ public class Scan {
                                .mapToDouble(fichier -> fichier.getExecutionTime() != null ? fichier.getExecutionTime() : 0)
                                .sum();
         return total;
+    }
+    public void setScanPath(String scanPath) {
+        this.scanPath = scanPath;
+    }
+
+    public String getScanPath() {
+        return this.scanPath;
     }
 }

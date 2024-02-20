@@ -1,0 +1,12 @@
+FichierRepositoryIntegrationTest.class
+FichierUnitTest.class
+ScanControllerIntegrationTest.class
+ScanUnitTest.class
+ScanServiceUnitTests.class
+ScanServiceIntegrationTests.class
+FileScanServiceUnitTest.class
+ScanRepositoryIntegrationTest.class
+FichierRepositoryUnitTest.class
+ScanRepositoryTest.class
+FileScanServiceIntegrationTest.class
+ScanControllerUnitTest.class

@@ -1,17 +1,19 @@
 package com.service;
 
+import com.model.Scan;
 import com.repository.ScanRepository;
-
-import model.Scan;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
 @Service
+@Transactional
 public class ScanService {
 
     @Autowired
@@ -74,12 +76,14 @@ public class ScanService {
                 .orElseThrow(() -> new RuntimeException("Scan not found with id " + scanId));
     }
 
+    // Calculer la moyenne du temps d'exécution par fichier
+    @Transactional(readOnly = true)
     public double calculerMoyenneTempsExecutionParRepertoire() {
         List<Scan> scans = scanRepository.findAll();
         OptionalDouble moyenne = scans.stream()
-            .filter(scan -> scan.getFichiers() != null && !scan.getFichiers().isEmpty())
-            .mapToDouble(scan -> scan.getTempsExecutionTotal() / scan.getFichiers().size())
-            .average();
+                .filter(scan -> scan.getFichiers() != null && !scan.getFichiers().isEmpty())
+                .mapToDouble(scan -> scan.getTempsExecutionTotal() / scan.getFichiers().size())
+                .average();
 
         return moyenne.isPresent() ? moyenne.getAsDouble() : 0;
     }

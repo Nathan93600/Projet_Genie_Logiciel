@@ -1,0 +1,11 @@
+com\controller\ScanController.class
+com\service\FileScanService$1.class
+com\service\FileScanService.class
+com\service\ScanService.class
+com\example\demo\Application.class
+com\repository\FichierRepository.class
+com\config\SwaggerConfig.class
+com\service\FileScanService$2.class
+com\model\Scan.class
+com\model\Fichier.class
+com\repository\ScanRepository.class

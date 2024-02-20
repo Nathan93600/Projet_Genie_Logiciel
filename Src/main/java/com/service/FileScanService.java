@@ -37,72 +37,61 @@ public class FileScanService {
         Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Fichier fichier = new Fichier();
-                fichier.setNom(file.getFileName().toString());
-                fichier.setDateModification(LocalDateTime.ofInstant(attrs.lastModifiedTime().toInstant(), ZoneId.systemDefault()));
-                fichier.setPoids(attrs.size());
-                try {
-                    fichier.setType(Files.probeContentType(file));
-                } catch (IOException e) {
-                    fichier.setType("unknown");
-                }
-                fichier.setRepertoire(file.getParent().toString());
-                fichiers.add(fichier); // Ajoute le fichier à l'ensemble des fichiers du scan
+                Fichier fichier = createFichierFromFile(file, attrs);
+                fichiers.add(fichier);
                 return FileVisitResult.CONTINUE;
             }
         });
 
         scan.setFichiers(fichiers);
-        fichiers.forEach(fichier -> fichier.setScan(scan)); // Associe chaque fichier au scan avant de sauvegarder
+        fichiers.forEach(fichier -> fichier.setScan(scan));
 
-        return scanRepository.save(scan); // Sauvegarde le scan et automatiquement les fichiers grâce à la relation cascade
+        return scanRepository.save(scan);
+    }
+
+    private Fichier createFichierFromFile(Path file, BasicFileAttributes attrs) {
+        Fichier fichier = new Fichier();
+        fichier.setNom(file.getFileName().toString());
+        fichier.setDateModification(LocalDateTime.ofInstant(attrs.lastModifiedTime().toInstant(), ZoneId.systemDefault()));
+        fichier.setPoids(attrs.size());
+        try {
+            fichier.setType(Files.probeContentType(file));
+        } catch (IOException e) {
+            // Gérer l'exception de manière appropriée, par exemple en journalisant l'erreur
+            fichier.setType("unknown");
+        }
+        fichier.setRepertoire(file.getParent().toString());
+        return fichier;
     }
 
     public double calculerMoyenneTempsExecutionParFichier() {
         List<Fichier> fichiers = fichierRepository.findAll();
         OptionalDouble moyenne = fichiers.stream()
-            .mapToDouble(Fichier::getTempsExecution)
+            .mapToDouble(Fichier::getExecutionTime) // Utilisation de la méthode getExecutionTime()
             .average();
-
-        return moyenne.isPresent() ? moyenne.getAsDouble() : 0;
+    
+        return moyenne.orElse(0);
     }
 
-    public Scan replayScan(Long scanId) throws IOException {
-        // Récupérer le scan existant à rejouer
+    public Scan replayScan(Long scanId, Path startPath) throws IOException {
         Scan originalScan = scanRepository.findById(scanId)
             .orElseThrow(() -> new RuntimeException("Scan not found with id: " + scanId));
 
-        // Supposons que vous ayez une manière de récupérer le chemin du répertoire original du scan
-        Path startPath = Paths.get(originalScan.getScanPath());
-
-        // Créer un nouveau Scan pour enregistrer les résultats du scan rejoué
         Scan newScan = new Scan();
         newScan.setScanDate(LocalDateTime.now());
-        // Ici, copiez d'autres configurations nécessaires du scan original au nouveau scan
-        // Par exemple, si vous avez des filtres ou des configurations spécifiques, assurez-vous de les copier
 
         Set<Fichier> fichiers = new HashSet<>();
         Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Fichier fichier = new Fichier();
-                fichier.setNom(file.getFileName().toString());
-                fichier.setDateModification(LocalDateTime.ofInstant(attrs.lastModifiedTime().toInstant(), ZoneId.systemDefault()));
-                fichier.setPoids(attrs.size());
-                try {
-                    fichier.setType(Files.probeContentType(file));
-                } catch (IOException e) {
-                    fichier.setType("unknown");
-                }
-                fichier.setRepertoire(file.getParent().toString());
-                fichier.setScan(newScan); // Associe chaque fichier au nouveau scan
+                Fichier fichier = createFichierFromFile(file, attrs);
+                fichier.setScan(newScan);
                 fichiers.add(fichier);
                 return FileVisitResult.CONTINUE;
             }
         });
 
         newScan.setFichiers(fichiers);
-        // Sauvegarder le nouveau scan dans la base de données
         return scanRepository.save(newScan);
     }
 }
