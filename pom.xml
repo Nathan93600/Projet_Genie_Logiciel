@@ -75,6 +75,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- JUnit Jupiter Api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.2 </version> <!-- Assurez-vous de spécifier la version la plus récente de JUnit 5 -->
+            <scope>test</scope>
+        </dependency>
+
         <!-- Spring Test -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -108,7 +116,6 @@
             <version>3.11.2</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -52,6 +52,9 @@ public class Scan {
     public void setScanPath(String scanPath) {
         this.scanPath = scanPath;
     }
+   
+   
+
 
     public String getScanPath() {
         return this.scanPath;
