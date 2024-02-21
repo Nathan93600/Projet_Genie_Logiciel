@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: ScanTest
+Test set: com.controller.ScanControllerTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in ScanTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.919 s -- in com.controller.ScanControllerTest
