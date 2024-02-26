@@ -1,5 +1,6 @@
 com\service\FileScanServiceTest.class
 com\service\ScanServiceTest.class
 ScanTest.class
+com\controller\ScanControllerIntegrationTest.class
 com\controller\ScanControllerTest.class
 FichierTest.class
