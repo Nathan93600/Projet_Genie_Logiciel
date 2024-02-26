@@ -16,6 +16,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Tests unitaires pour la classe ScanController.
+ */
 class ScanControllerTest {
 
     @Mock
@@ -29,6 +32,9 @@ class ScanControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Teste la création d'un scan.
+     */
     @Test
     void testCreateScan() {
         Scan scan = new Scan();
@@ -40,6 +46,9 @@ class ScanControllerTest {
         assertEquals(scan, response.getBody());
     }
 
+    /**
+     * Teste la récupération de tous les scans.
+     */
     @Test
     void testGetAllScans() {
         List<Scan> scans = new ArrayList<>();
@@ -51,6 +60,9 @@ class ScanControllerTest {
         assertEquals(scans, response.getBody());
     }
 
+    /**
+     * Teste la récupération d'un scan par son ID.
+     */
     @Test
     void testGetScanById() {
         Long id = 1L;
@@ -63,6 +75,9 @@ class ScanControllerTest {
         assertEquals(scan, response.getBody());
     }
 
+    /**
+     * Teste la mise à jour d'un scan.
+     */
     @Test
     void testUpdateScan() {
         Long id = 1L;
@@ -75,6 +90,9 @@ class ScanControllerTest {
         assertEquals(scan, response.getBody());
     }
 
+    /**
+     * Teste la suppression d'un scan par son ID.
+     */
     @Test
     void testDeleteScan() {
         Long id = 1L;

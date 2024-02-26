@@ -12,37 +12,48 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
+/**
+ * Service class for managing Scan entities.
+ */
 @Service
 @Transactional
 public class ScanService {
 
-    @Autowired
-    private ScanRepository scanRepository;
+    private final ScanRepository scanRepository;
 
+    @Autowired
     public ScanService(ScanRepository scanRepository) {
         this.scanRepository = scanRepository;
     }
 
-    // Créer un nouveau scan
+    /**
+     * Creates a new scan.
+     * @param scan The scan object to be created
+     * @return Scan - The created scan object
+     */
     public Scan createScan(Scan scan) {
-        scan.setScanDate(LocalDateTime.now()); // Définir la date du scan à maintenant
+        scan.setScanDate(LocalDateTime.now());
         return scanRepository.save(scan);
     }
 
-    // Dupliquer un scan existant
+    /**
+     * Duplicates an existing scan.
+     * @param scanId The ID of the scan to duplicate
+     * @return Scan - The duplicated scan object
+     * @throws RuntimeException If the scan with the specified ID is not found
+     */
     public Scan duplicateScan(Long scanId) {
         Optional<Scan> originalScanOpt = scanRepository.findById(scanId);
         if (originalScanOpt.isPresent()) {
             Scan originalScan = originalScanOpt.get();
             Scan duplicatedScan = new Scan();
 
-            // Copier les propriétés de l'original (sauf l'ID et les fichiers associés)
             duplicatedScan.setMaxFiles(originalScan.getMaxFiles());
             duplicatedScan.setMaxDepth(originalScan.getMaxDepth());
             duplicatedScan.setFileNameFilter(originalScan.getFileNameFilter());
             duplicatedScan.setFileTypeFilter(originalScan.getFileTypeFilter());
-            duplicatedScan.setScanDate(LocalDateTime.now()); // Mettre la date actuelle pour le nouveau scan
-            duplicatedScan.setExecutionTime(null); // L'exécution n'a pas encore eu lieu
+            duplicatedScan.setScanDate(LocalDateTime.now());
+            duplicatedScan.setExecutionTime(null);
 
             return scanRepository.save(duplicatedScan);
         } else {
@@ -50,12 +61,21 @@ public class ScanService {
         }
     }
 
-    // Supprimer un scan
+    /**
+     * Deletes a scan by its ID.
+     * @param scanId The ID of the scan to delete
+     */
     public void deleteScan(Long scanId) {
         scanRepository.deleteById(scanId);
     }
 
-    // Mettre à jour un scan
+    /**
+     * Updates a scan.
+     * @param scanId The ID of the scan to update
+     * @param scanDetails The updated details of the scan
+     * @return Scan - The updated scan object
+     * @throws RuntimeException If the scan with the specified ID is not found
+     */
     public Scan updateScan(Long scanId, Scan scanDetails) {
         Scan scan = scanRepository.findById(scanId)
                 .orElseThrow(() -> new RuntimeException("Scan not found with id " + scanId));
@@ -64,23 +84,33 @@ public class ScanService {
         scan.setMaxDepth(scanDetails.getMaxDepth());
         scan.setFileNameFilter(scanDetails.getFileNameFilter());
         scan.setFileTypeFilter(scanDetails.getFileTypeFilter());
-        // Ne pas mettre à jour la date du scan et les fichiers associés ici
 
         return scanRepository.save(scan);
     }
 
-    // Récupérer tous les scans
+    /**
+     * Retrieves all scans.
+     * @return List<Scan> - The list of all scans
+     */
     public List<Scan> getAllScans() {
         return scanRepository.findAll();
     }
 
-    // Récupérer un scan par son ID
+    /**
+     * Retrieves a scan by its ID.
+     * @param scanId The ID of the scan to retrieve
+     * @return Scan - The retrieved scan object
+     * @throws RuntimeException If the scan with the specified ID is not found
+     */
     public Scan getScanById(Long scanId) {
         return scanRepository.findById(scanId)
                 .orElseThrow(() -> new RuntimeException("Scan not found with id " + scanId));
     }
 
-    // Calculer la moyenne du temps d'exécution par fichier
+    /**
+     * Calculates the average execution time per file for all scans.
+     * @return double - The average execution time per file
+     */
     @Transactional(readOnly = true)
     public double calculerMoyenneTempsExecutionParRepertoire() {
         List<Scan> scans = scanRepository.findAll();
@@ -89,6 +119,6 @@ public class ScanService {
                 .mapToDouble(scan -> scan.getTempsExecutionTotal() / scan.getFichiers().size())
                 .average();
 
-        return moyenne.isPresent() ? moyenne.getAsDouble() : 0;
+        return moyenne.orElse(0);
     }
 }

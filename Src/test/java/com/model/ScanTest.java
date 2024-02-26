@@ -1,19 +1,30 @@
 import com.model.Scan;
 import com.model.Fichier;
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe de tests unitaires pour la classe Scan.
+ */
 public class ScanTest {
 
+    /**
+     * Teste la création d'une instance de Scan.
+     */
     @Test
     void testScanCreation() {
         Scan scan = new Scan();
         assertNotNull(scan);
     }
 
+    /**
+     * Teste les setters et getters de la classe Scan.
+     */
     @Test
     void testScanSettersAndGetters() {
         Scan scan = new Scan();
@@ -37,6 +48,9 @@ public class ScanTest {
         assertEquals("/path/to/scan", scan.getScanPath());
     }
 
+    /**
+     * Teste le calcul du temps d'exécution total du scan.
+     */
     @Test
     void testGetTempsExecutionTotal() {
         Scan scan = new Scan();

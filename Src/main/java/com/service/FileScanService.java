@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.OptionalDouble;
 import java.util.Set;
 
+/**
+ * Service class for handling file scanning operations.
+ */
 @Service
 public class FileScanService {
 
@@ -29,6 +32,12 @@ public class FileScanService {
         this.fichierRepository = fichierRepository;
     }
 
+    /**
+     * Scans the specified directory and saves the scan result to the database.
+     * @param startPath The path of the directory to scan
+     * @return Scan - The scan object representing the result of the scan
+     * @throws IOException If an I/O error occurs during the scan process
+     */
     public Scan scanDirectory(Path startPath) throws IOException {
         final Scan scan = new Scan();
         scan.setScanDate(LocalDateTime.now());
@@ -57,22 +66,32 @@ public class FileScanService {
         try {
             fichier.setType(Files.probeContentType(file));
         } catch (IOException e) {
-            // Gérer l'exception de manière appropriée, par exemple en journalisant l'erreur
             fichier.setType("unknown");
         }
         fichier.setRepertoire(file.getParent().toString());
         return fichier;
     }
 
+    /**
+     * Calculates the average execution time per file in the database.
+     * @return double - The average execution time per file
+     */
     public double calculerMoyenneTempsExecutionParFichier() {
         List<Fichier> fichiers = fichierRepository.findAll();
         OptionalDouble moyenne = fichiers.stream()
-            .mapToDouble(Fichier::getExecutionTime) // Utilisation de la méthode getExecutionTime()
+            .mapToDouble(Fichier::getExecutionTime)
             .average();
     
         return moyenne.orElse(0);
     }
 
+    /**
+     * Replays the scan identified by the given ID on the specified directory and saves the new scan result to the database.
+     * @param scanId The ID of the scan to replay
+     * @param startPath The path of the directory to scan
+     * @return Scan - The new scan object representing the result of the replayed scan
+     * @throws IOException If an I/O error occurs during the scan process
+     */
     public Scan replayScan(Long scanId, Path startPath) throws IOException {
         Scan originalScan = scanRepository.findById(scanId)
             .orElseThrow(() -> new RuntimeException("Scan not found with id: " + scanId));

@@ -5,41 +5,57 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * Représente une entité de balayage.
+ */
 @Entity
 public class Scan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer maxFiles;
-    private Integer maxDepth;
-    private String fileNameFilter;
-    private String fileTypeFilter;
-    private LocalDateTime scanDate;
-    private Long executionTime;
-    private String scanPath;
+    private Integer maxFiles; // Nombre maximal de fichiers
+    private Integer maxDepth; // Profondeur maximale
+    private String fileNameFilter; // Filtre de nom de fichier
+    private String fileTypeFilter; // Filtre de type de fichier
+    private LocalDateTime scanDate; // Date de balayage
+    private Long executionTime; // Temps d'exécution
+    private String scanPath; // Chemin de balayage
     
-
     @OneToMany(mappedBy = "scan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Fichier> fichiers = new HashSet<>();
+    private Set<Fichier> fichiers = new HashSet<>(); // Ensemble de fichiers scannés associés à ce balayage
 
     // Getters and Setters
 
+    /**
+     * Renvoie l'ID du balayage.
+     * @return L'ID du balayage
+     */
     public Long getId() { return id; }
+
+    /**
+     * Définit l'ID du balayage.
+     * @param id L'ID du balayage à définir
+     */
     public void setId(Long id) { this.id = id; }
-    public Integer getMaxFiles() { return maxFiles; }
-    public void setMaxFiles(Integer maxFiles) { this.maxFiles = maxFiles; }
-    public Integer getMaxDepth() { return maxDepth; }
-    public void setMaxDepth(Integer maxDepth) { this.maxDepth = maxDepth; }
-    public String getFileNameFilter() { return fileNameFilter; }
-    public void setFileNameFilter(String fileNameFilter) { this.fileNameFilter = fileNameFilter; }
-    public String getFileTypeFilter() { return fileTypeFilter; }
-    public void setFileTypeFilter(String fileTypeFilter) { this.fileTypeFilter = fileTypeFilter; }
-    public LocalDateTime getScanDate() { return scanDate; }
-    public void setScanDate(LocalDateTime scanDate) { this.scanDate = scanDate; }
-    public Long getExecutionTime() { return executionTime; }
-    public void setExecutionTime(Long executionTime) { this.executionTime = executionTime; }
+
+    // Autres getters et setters pour les propriétés maxFiles, maxDepth, fileNameFilter, fileTypeFilter, scanDate, executionTime, scanPath
+
+    /**
+     * Renvoie la collection de fichiers scannés associés à ce balayage.
+     * @return La collection de fichiers scannés
+     */
     public Set<Fichier> getFichiers() { return fichiers; }
-    public void setFichiers(Set<Fichier> fichiers) {this.fichiers = fichiers;}
+
+    /**
+     * Définit la collection de fichiers scannés associés à ce balayage.
+     * @param fichiers La collection de fichiers scannés à définir
+     */
+    public void setFichiers(Set<Fichier> fichiers) { this.fichiers = fichiers; }
+
+    /**
+     * Calcule le temps total d'exécution pour tous les fichiers scannés associés à ce balayage.
+     * @return Le temps total d'exécution
+     */
     public double getTempsExecutionTotal() {
         if (fichiers == null || fichiers.isEmpty()) {
             return 0;
@@ -49,14 +65,16 @@ public class Scan {
                                .sum();
         return total;
     }
-    public void setScanPath(String scanPath) {
-        this.scanPath = scanPath;
-    }
-   
-   
 
+    /**
+     * Définit le chemin de balayage.
+     * @param scanPath Le chemin de balayage à définir
+     */
+    public void setScanPath(String scanPath) { this.scanPath = scanPath; }
 
-    public String getScanPath() {
-        return this.scanPath;
-    }
+    /**
+     * Renvoie le chemin de balayage.
+     * @return Le chemin de balayage
+     */
+    public String getScanPath() { return this.scanPath; }
 }
