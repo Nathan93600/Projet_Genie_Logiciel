@@ -2,15 +2,10 @@ import com.model.Fichier;
 import com.model.Scan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- * Classe de tests unitaires pour la classe Fichier.
- */
 public class FichierTest {
 
     private Fichier fichier;
@@ -20,17 +15,11 @@ public class FichierTest {
         fichier = new Fichier();
     }
 
-    /**
-     * Teste la création d'une instance de Fichier.
-     */
     @Test
     void testConstructor() {
         assertNotNull(fichier);
     }
 
-    /**
-     * Teste les getters et setters de la classe Fichier.
-     */
     @Test
     void testGettersAndSetters() {
         Long id = 1L;
@@ -58,9 +47,6 @@ public class FichierTest {
         assertEquals(executionTime, fichier.getExecutionTime());
     }
 
-    /**
-     * Teste l'association avec un objet Scan.
-     */
     @Test
     void testScanAssociation() {
         Scan scan = new Scan();

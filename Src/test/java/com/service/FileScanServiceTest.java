@@ -1,3 +1,8 @@
+package com.service;
+
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import com.model.Fichier;
 import com.model.Scan;
 import com.repository.FichierRepository;
@@ -8,19 +13,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.Mockito.*;
 
-/**
- * Classe de tests unitaires pour la classe FileScanService.
- */
 class FileScanServiceTest {
 
     @Mock
@@ -37,23 +37,14 @@ class FileScanServiceTest {
         fileScanService = new FileScanService(scanRepository, fichierRepository);
     }
 
-    /**
-     * Méthode utilitaire pour créer un répertoire temporaire.
-     * @return Le chemin du répertoire temporaire créé.
-     * @throws IOException Si une erreur d'entrée-sortie survient lors de la création du répertoire temporaire.
-     */
     private Path createTemporaryDirectory() throws IOException {
         return Files.createTempDirectory("test-directory");
     }
 
-    /**
-     * Teste la méthode scanDirectory de la classe FileScanService.
-     * @throws IOException Si une erreur d'entrée-sortie survient lors de la création du répertoire temporaire.
-     */
     @Test
     void testScanDirectory() throws IOException {
         // Given
-        Path startPath = createTemporaryDirectory();
+        Path startPath = Files.createTempDirectory("test-dir");
         Scan scan = new Scan();
         scan.setScanDate(LocalDateTime.now());
         Set<Fichier> fichiers = new HashSet<>();
@@ -75,5 +66,5 @@ class FileScanServiceTest {
         // Ajouter d'autres assertions en fonction de votre logique métier
     }
 
-    // Ajoutez d'autres méthodes de test au besoin pour couvrir les autres méthodes de FileScanService
+    // Add more test methods as needed to cover other methods in FileScanService
 }

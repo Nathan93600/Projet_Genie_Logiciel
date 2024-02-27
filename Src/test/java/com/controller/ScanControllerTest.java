@@ -17,23 +17,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
- * Tests unitaires pour la classe ScanController.
+ * Classe de test pour ScanController.
+ * Utilise Mockito pour simuler les interactions avec ScanService et tester uniquement la logique du contrôleur.
  */
 class ScanControllerTest {
 
     @Mock
-    private ScanService scanService;
+    private ScanService scanService; // Le service à mocker pour simuler les interactions
 
     @InjectMocks
-    private ScanController scanController;
+    private ScanController scanController; // Le contrôleur à tester, avec les dépendances mockées injectées
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this); // Initialisation des mocks avant chaque test
     }
 
     /**
      * Teste la création d'un scan.
+     * Simule la réponse du service et vérifie que le contrôleur retourne le bon statut HTTP et corps de réponse.
      */
     @Test
     void testCreateScan() {
@@ -45,9 +47,10 @@ class ScanControllerTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(scan, response.getBody());
     }
-
+    
     /**
      * Teste la récupération de tous les scans.
+     * Vérifie que le contrôleur retourne correctement la liste des scans et le bon statut HTTP.
      */
     @Test
     void testGetAllScans() {
@@ -62,6 +65,7 @@ class ScanControllerTest {
 
     /**
      * Teste la récupération d'un scan par son ID.
+     * Simule la réponse du service et vérifie que le contrôleur retourne le bon scan et statut HTTP.
      */
     @Test
     void testGetScanById() {
@@ -77,6 +81,7 @@ class ScanControllerTest {
 
     /**
      * Teste la mise à jour d'un scan.
+     * Simule la réponse du service et vérifie que le contrôleur retourne le scan mis à jour et le bon statut HTTP.
      */
     @Test
     void testUpdateScan() {
@@ -89,9 +94,10 @@ class ScanControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(scan, response.getBody());
     }
-
+    
     /**
-     * Teste la suppression d'un scan par son ID.
+     * Teste la suppression d'un scan.
+     * Vérifie que le contrôleur appelle le service de suppression et retourne le bon statut HTTP.
      */
     @Test
     void testDeleteScan() {

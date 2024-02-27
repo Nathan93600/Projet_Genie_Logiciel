@@ -7,37 +7,35 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Interface de repository pour l'entité Scan, permettant d'effectuer des opérations CRUD sur la base de données.
+ * Interface de repository pour l'entité Scan.
+ * Étend JpaRepository pour fournir des opérations de base de données pour l'entité Scan.
  */
 @Repository
 public interface ScanRepository extends JpaRepository<Scan, Long> {
-
     /**
-     * Recherche les scans ayant un nombre maximal de fichiers spécifié.
-     * @param nombreMaxFichiers Le nombre maximal de fichiers à rechercher
-     * @return Une liste de scans ayant le nombre maximal de fichiers spécifié
+     * Recherche des scans ayant un nombre maximal de fichiers.
+     * @param nombreMaxFichiers Le nombre maximal de fichiers pour les scans à rechercher.
+     * @return Liste de scans correspondant au critère de recherche.
      */
     List<Scan> findByNombreMaxFichiers(int nombreMaxFichiers);
-
     /**
-     * Recherche les scans ayant une profondeur maximale d'arborescence spécifiée.
-     * @param profondeurMaxArborescence La profondeur maximale d'arborescence à rechercher
-     * @return Une liste de scans ayant la profondeur maximale d'arborescence spécifiée
+     * Recherche des scans avec une profondeur d'arborescence maximale spécifiée.
+     * @param profondeurMaxArborescence La profondeur maximale d'arborescence pour les scans à rechercher.
+     * @return Liste de scans correspondant au critère de recherche.
      */
     List<Scan> findByProfondeurMaxArborescence(int profondeurMaxArborescence);
-
     /**
-     * Recherche les scans dont la date de scan est comprise entre deux dates spécifiées.
-     * @param dateDebut La date de début de la période de recherche
-     * @param dateFin La date de fin de la période de recherche
-     * @return Une liste de scans dont la date de scan est comprise entre les dates spécifiées
+     * Recherche des scans effectués entre deux dates.
+     * @param dateDebut La date de début de la période de recherche.
+     * @param dateFin La date de fin de la période de recherche.
+     * @return Liste de scans réalisés dans l'intervalle spécifié.
      */
     List<Scan> findByDateScanBetween(Long dateDebut, Long dateFin);
 
     /**
-     * Recherche les scans ayant un temps d'exécution de scan supérieur ou égal à une valeur minimale spécifiée.
-     * @param tempsExecutionMin Le temps d'exécution minimum à rechercher
-     * @return Une liste de scans ayant un temps d'exécution de scan supérieur ou égal à la valeur minimale spécifiée
+     * Recherche des scans dont le temps d'exécution est supérieur ou égal à une valeur minimale.
+     * @param tempsExecutionMin Le temps d'exécution minimal pour les scans à rechercher.
+     * @return Liste de scans dont le temps d'exécution satisfait au critère de recherche.
      */
     List<Scan> findByTempsExecutionScanGreaterThanEqual(Long tempsExecutionMin);
 }

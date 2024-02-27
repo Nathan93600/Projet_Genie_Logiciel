@@ -18,7 +18,8 @@ import java.util.OptionalDouble;
 import java.util.Set;
 
 /**
- * Service class for handling file scanning operations.
+ * Service pour le scan de fichiers et la gestion des entités Scan et Fichier.
+ * Ce service permet de scanner des répertoires pour créer des entités Fichier liées à une entité Scan.
  */
 @Service
 public class FileScanService {
@@ -26,6 +27,11 @@ public class FileScanService {
     private final ScanRepository scanRepository;
     private final FichierRepository fichierRepository;
 
+    /**
+     * Constructeur avec injection de ScanRepository et FichierRepository.
+     * @param scanRepository Le repository pour les opérations sur les entités Scan.
+     * @param fichierRepository Le repository pour les opérations sur les entités Fichier.
+     */
     @Autowired
     public FileScanService(ScanRepository scanRepository, FichierRepository fichierRepository) {
         this.scanRepository = scanRepository;
@@ -33,11 +39,12 @@ public class FileScanService {
     }
 
     /**
-     * Scans the specified directory and saves the scan result to the database.
-     * @param startPath The path of the directory to scan
-     * @return Scan - The scan object representing the result of the scan
-     * @throws IOException If an I/O error occurs during the scan process
+     * Scanne un répertoire et crée une entité Scan avec les fichiers trouvés.
+     * @param startPath Le chemin du répertoire à scanner.
+     * @return L'entité Scan sauvegardée avec ses fichiers associés.
+     * @throws IOException Si une erreur de lecture survient.
      */
+
     public Scan scanDirectory(Path startPath) throws IOException {
         final Scan scan = new Scan();
         scan.setScanDate(LocalDateTime.now());
@@ -58,6 +65,12 @@ public class FileScanService {
         return scanRepository.save(scan);
     }
 
+    /**
+     * Crée une entité Fichier à partir des attributs d'un fichier.
+     * @param file Le chemin vers le fichier.
+     * @param attrs Les attributs du fichier.
+     * @return L'entité Fichier créée.
+     */
     private Fichier createFichierFromFile(Path file, BasicFileAttributes attrs) {
         Fichier fichier = new Fichier();
         fichier.setNom(file.getFileName().toString());
@@ -66,6 +79,7 @@ public class FileScanService {
         try {
             fichier.setType(Files.probeContentType(file));
         } catch (IOException e) {
+            // Gérer l'exception de manière appropriée, par exemple en journalisant l'erreur
             fichier.setType("unknown");
         }
         fichier.setRepertoire(file.getParent().toString());
@@ -73,24 +87,24 @@ public class FileScanService {
     }
 
     /**
-     * Calculates the average execution time per file in the database.
-     * @return double - The average execution time per file
+     * Calcule la moyenne du temps d'exécution pour tous les fichiers.
+     * @return La moyenne du temps d'exécution.
      */
     public double calculerMoyenneTempsExecutionParFichier() {
         List<Fichier> fichiers = fichierRepository.findAll();
         OptionalDouble moyenne = fichiers.stream()
-            .mapToDouble(Fichier::getExecutionTime)
+            .mapToDouble(Fichier::getExecutionTime) // Utilisation de la méthode getExecutionTime()
             .average();
     
         return moyenne.orElse(0);
     }
 
     /**
-     * Replays the scan identified by the given ID on the specified directory and saves the new scan result to the database.
-     * @param scanId The ID of the scan to replay
-     * @param startPath The path of the directory to scan
-     * @return Scan - The new scan object representing the result of the replayed scan
-     * @throws IOException If an I/O error occurs during the scan process
+     * Réalise un nouveau scan basé sur un scan existant.
+     * @param scanId L'identifiant du scan original.
+     * @param startPath Le chemin du répertoire à scanner.
+     * @return Le nouveau scan créé.
+     * @throws IOException Si une erreur de lecture survient.
      */
     public Scan replayScan(Long scanId, Path startPath) throws IOException {
         Scan originalScan = scanRepository.findById(scanId)

@@ -1,3 +1,5 @@
+package com.service;
+
 import com.model.Scan;
 import com.repository.ScanRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +13,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Classe de tests unitaires pour la classe ScanService.
- */
 class ScanServiceTest {
 
     @Mock
@@ -27,9 +26,6 @@ class ScanServiceTest {
         scanService = new ScanService(scanRepository);
     }
 
-    /**
-     * Teste la méthode createScan de la classe ScanService.
-     */
     @Test
     void testCreateScan() {
         // Given
@@ -44,9 +40,6 @@ class ScanServiceTest {
         assertNotNull(createdScan.getScanDate());
     }
 
-    /**
-     * Teste la méthode duplicateScan de la classe ScanService.
-     */
     @Test
     void testDuplicateScan() {
         // Given
