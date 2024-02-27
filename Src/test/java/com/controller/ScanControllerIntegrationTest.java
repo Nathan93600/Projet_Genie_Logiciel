@@ -32,15 +32,30 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.*;
+import com.example.demo.Application;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// Annotations pour configurer le test d'intégration
-@ExtendWith(SpringExtension.class) // Intègre le support de Spring dans les tests JUnit 5
-@SpringBootTest // Indique que c'est un test d'intégration qui charge le contexte Spring complet
-@AutoConfigureMockMvc // Configure automatiquement MockMvc pour les tests web
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:application-integrationtest.properties")
+
 class ScanControllerIntegrationTest {
 
     @Autowired
