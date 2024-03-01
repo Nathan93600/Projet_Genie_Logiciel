@@ -3,6 +3,8 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.service.ScanContext;
+
 /**
  * Classe principale de l'application Spring Boot.
  * Utilise l'annotation @SpringBootApplication pour marquer la configuration automatique de l'application,
@@ -18,6 +20,11 @@ public class Application {
      * @param args Les arguments de ligne de commande passés au démarrage de l'application.
      */
     public static void main(String[] args) {
+        ScanContext context = new ScanContext();
+        context.demarrerScan(); // Change l'état à EnCoursDeScan
+        context.terminerScan(); // Change l'état à ScanTermine
         SpringApplication.run(Application.class, args);
     }
 }
+
+

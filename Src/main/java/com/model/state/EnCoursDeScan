@@ -1,0 +1,20 @@
+package com.model.state;
+
+public class EnCoursDeScan implements EtatScan {
+    @Override
+    public void demarrerScan(ScanContext context) {
+        System.out.println("Le scan est déjà en cours");
+    }
+
+    @Override
+    public void terminerScan(ScanContext context) {
+        System.out.println("Scan terminé");
+        context.setEtatScan(new ScanTermine());
+    }
+
+    @Override
+    public void erreurScan(ScanContext context) {
+        System.out.println("Erreur pendant le scan");
+        context.setEtatScan(new ErreurScan());
+    }
+}
